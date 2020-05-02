@@ -21,12 +21,26 @@ export class HomeComponent implements OnInit, OnDestroy {
         // Next emmit a new value, error throw an error
         // And complete shows that the observable is done
         observer.next(count);
+
+        if(count === 2){
+          observer.complete();
+        }
+
+        if (count > 3) {
+          observer.error(new Error('Count is greater than 3!'));
+        }
+
         count++;
       }, 1000);
     });
 
     this.firstObsSubscription = customInvervalObservable.subscribe(data => {
       console.log(data);
+    }, error => {
+      console.log(error);
+      alert(error.message);
+    }, () => {
+      console.log('Completed');
     });
 
     // This will run at each second
